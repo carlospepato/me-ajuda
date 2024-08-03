@@ -11,7 +11,7 @@ Uma breve descrição sobre o que esse projeto faz e para quem ele é
 Bem-vindo ao nosso projeto desenvolvido durante o hackathon da KipperDev! Nosso objetivo é criar uma solução que ajude a comunidade em situações de emergência e necessidade.
 
 ## Funcionalidades
-**Botão de Pânico
+### Botão de Pânico
 
 - Descrição: Ao clicar e arrastar o botão de pânico, o aplicativo identifica sua localização.
 - Ação: Se mais de 99 pessoas ativarem o botão de pânico dentro de um período de 1 hora, um post será criado no Twitter para alertar sobre a situação.
