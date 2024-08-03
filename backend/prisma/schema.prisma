@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model RiskSituation {
+  id   Int    @id @default(autoincrement())
+  type String
+  Risk Risk[]
+
+  @@map("riskSituation")
+}
+
+model Risk {
+  id              Int            @id @default(autoincrement())
+  riskSituationId Int
+  riskSituation   RiskSituation  @relation(fields: [riskSituationId], references: [id])
+  cause           String
+  solution        String
+  PanicFunction   PanicFunction? @relation(fields: [panicFunctionId], references: [id])
+  panicFunctionId String?
+  RiskAlert       RiskAlert?     @relation(fields: [riskAlertId], references: [id])
+  riskAlertId     String?
+
+  @@map("risk")
+}
+
+model DonationList {
+  id         String     @id @default(uuid())
+  name       String
+  address    String
+  phone      String
+  email      String
+  donation   Donation[]
+  wasDonated Boolean
+
+  @@map("donationList")
+}
+
+model Donation {
+  id             String       @id @default(uuid())
+  donationListId String
+  donationList   DonationList @relation(fields: [donationListId], references: [id])
+  name           String
+  quantity       Int
+  measure        String
+
+  @@map("donation")
+}
+
+model Measure {
+  id   Int    @id @default(autoincrement())
+  type String
+
+  @@map("measure")
+}
+
+model User {
+  id      String @id @default(uuid())
+  name    String
+  email   String @unique
+  phone   String
+  address String
+
+  @@map("user")
+}
+
+model PanicFunction {
+  id          String     @id @default(uuid())
+  name        String
+  phone       String
+  address     String
+  email       String
+  typeRisk    Risk[]
+  city        String
+  date        DateTime
+  concluded   Boolean
+  RiskAlert   RiskAlert? @relation(fields: [riskAlertId], references: [id])
+  riskAlertId String?
+
+  @@map("panicFunction")
+}
+
+model RiskAlert {
+  id             String          @id @default(uuid())
+  typeRisk       Risk[]
+  city           String
+  triggerCount   Int
+  triggeredAt    DateTime
+  panicFunctions PanicFunction[]
+}
+
+model TwitterPost {
+  id          String   @id @default(uuid())
+  riskAlertId String
+  content     String
+  date        DateTime
+
+  @@map("twitterPost")
+}
