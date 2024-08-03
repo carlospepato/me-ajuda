@@ -1,10 +1,9 @@
 
+<div align="center">
+
 # Me Ajuda 
 
-Uma breve descrição sobre o que esse projeto faz e para quem ele é
-
-
-
+</div>
 
 ## Descrição do Projeto
 
