@@ -10,47 +10,56 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id           String         @id @default(uuid())
+  name         String
+  email        String         @unique
+  phone        String
+  address      String
+  DonationList DonationList[]
+
+  @@map("user")
+}
+
 model RiskSituation {
   id   Int    @id @default(autoincrement())
-  type String
+  type String @unique
   Risk Risk[]
 
   @@map("riskSituation")
 }
 
 model Risk {
-  id              Int            @id @default(autoincrement())
+  id              Int    @id @default(autoincrement())
   riskSituationId Int
-  riskSituation   RiskSituation  @relation(fields: [riskSituationId], references: [id])
   cause           String
   solution        String
-  PanicFunction   PanicFunction? @relation(fields: [panicFunctionId], references: [id])
-  panicFunctionId String?
-  RiskAlert       RiskAlert?     @relation(fields: [riskAlertId], references: [id])
-  riskAlertId     String?
+
+  riskSituation RiskSituation @relation(fields: [riskSituationId], references: [id])
 
   @@map("risk")
 }
 
 model DonationList {
   id         String     @id @default(uuid())
+  userId     String
   name       String
-  address    String
-  phone      String
-  email      String
   donation   Donation[]
   wasDonated Boolean
+
+  user User @relation(fields: [userId], references: [id])
 
   @@map("donationList")
 }
 
 model Donation {
-  id             String       @id @default(uuid())
+  id             String @id @default(uuid())
   donationListId String
-  donationList   DonationList @relation(fields: [donationListId], references: [id])
   name           String
   quantity       Int
   measure        String
+
+  donationList DonationList @relation(fields: [donationListId], references: [id])
 
   @@map("donation")
 }
@@ -62,39 +71,29 @@ model Measure {
   @@map("measure")
 }
 
-model User {
-  id      String @id @default(uuid())
-  name    String
-  email   String @unique
-  phone   String
-  address String
-
-  @@map("user")
-}
-
 model PanicFunction {
-  id          String     @id @default(uuid())
-  name        String
-  phone       String
-  address     String
-  email       String
-  typeRisk    Risk[]
+  id          String   @id @default(uuid())
   city        String
+  typeRisk    String
   date        DateTime
   concluded   Boolean
-  RiskAlert   RiskAlert? @relation(fields: [riskAlertId], references: [id])
   riskAlertId String?
+
+  RiskAlert RiskAlert? @relation(fields: [riskAlertId], references: [id])
 
   @@map("panicFunction")
 }
 
 model RiskAlert {
   id             String          @id @default(uuid())
-  typeRisk       Risk[]
+  typeRisk       String
   city           String
   triggerCount   Int
   triggeredAt    DateTime
   panicFunctions PanicFunction[]
+  TwitterPost    TwitterPost[]
+
+  @@map("riskAlert")
 }
 
 model TwitterPost {
@@ -102,6 +101,8 @@ model TwitterPost {
   riskAlertId String
   content     String
   date        DateTime
+
+  riskAlert RiskAlert @relation(fields: [riskAlertId], references: [id])
 
   @@map("twitterPost")
 }
