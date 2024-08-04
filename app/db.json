@@ -1,0 +1,12 @@
+{
+    "restaurants": [
+      { 
+        "id": "1", 
+        "name": "KFC",
+        "email":"daviglf@gmail.com",
+        "localidade":"",
+        "doacao":"carro", 
+        "image": "https://i.imgur.com/sZ1Jye3.png"
+      }
+    ]
+  }
