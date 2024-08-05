@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Modal,Pressable  } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list'
+import { useNavigation } from '@react-navigation/native';
 import * as Location from 'expo-location';
 
 
@@ -9,7 +10,9 @@ export function SOS() {
   const [pressTimer, setPressTimer] = useState<NodeJS.Timeout | null>(null);
   const [selected, setSelected] = React.useState("");
   const [city, setCity] = useState(String);
-  const [errorMsg, setErrorMsg] = useState(null);
+  const navigation = useNavigation();
+
+  // const [data, setData] = useState([]);
 
   const data = [
     { key: '1', value: 'Inundações' },
@@ -37,11 +40,49 @@ export function SOS() {
     }
   };
 
+  async function fetchRiskSituations() {
+    try {
+      console.log('dentro')
+      const response = await fetch('http://localhost:3333/risks-situation');
+      debugger
+      const result = await response.json();
+      console.log('result')
+      console.log(result)
+       const formattedData = result.riskSituations.map((item: { id: number; type: string }) => ({
+         key: item.id.toString(),
+         value: item.type
+       }));
+      //  setData(formattedData);
+    } catch (error) {
+      console.error('Erro ao buscar dados:', error);
+    }
+  }
+  
+  async function fetchPostRiskSituations() {
+    try {
+      const response = await fetch('http://localhost:3333/panic', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ selected, city })
+      });
+      const result = await response.json();
+      console.log(result)
+    } catch (error) {
+      console.error('Erro ao enviar dados:', error);
+    }
+  }
+  
+
   
   const handleSelect = (val: any) => {
     setSelected(val);
     setModalVisible(!modalVisible);
+    fetchPostRiskSituations()
     alert('Requisição realizada!')
+    // navigation.navigate('O que devo fazer se...')
+    
   };
 
   useEffect(() => {
@@ -50,7 +91,8 @@ export function SOS() {
       if (status !== 'granted') {
         return;
       }
-
+      
+      fetchRiskSituations();
       let location = await Location.getCurrentPositionAsync({});
       let reverseGeocode = await Location.reverseGeocodeAsync({
         latitude: location.coords.latitude,

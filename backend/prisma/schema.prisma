@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -30,12 +27,11 @@ model RiskSituation {
 }
 
 model Risk {
-  id              Int    @id @default(autoincrement())
+  id              Int           @id @default(autoincrement())
   riskSituationId Int
   cause           String
   solution        String
-
-  riskSituation RiskSituation @relation(fields: [riskSituationId], references: [id])
+  riskSituation   RiskSituation @relation(fields: [riskSituationId], references: [id])
 
   @@map("risk")
 }
@@ -44,22 +40,20 @@ model DonationList {
   id         String     @id @default(uuid())
   userId     String
   name       String
-  donation   Donation[]
   wasDonated Boolean
-
-  user User @relation(fields: [userId], references: [id])
+  donation   Donation[]
+  user       User       @relation(fields: [userId], references: [id])
 
   @@map("donationList")
 }
 
 model Donation {
-  id             String @id @default(uuid())
+  id             String       @id @default(uuid())
   donationListId String
   name           String
   quantity       Int
   measure        String
-
-  donationList DonationList @relation(fields: [donationListId], references: [id])
+  donationList   DonationList @relation(fields: [donationListId], references: [id])
 
   @@map("donation")
 }
@@ -72,14 +66,13 @@ model Measure {
 }
 
 model PanicFunction {
-  id          String   @id @default(uuid())
+  id          String     @id @default(uuid())
   city        String
   typeRisk    String
   date        DateTime
   concluded   Boolean
   riskAlertId String?
-
-  RiskAlert RiskAlert? @relation(fields: [riskAlertId], references: [id])
+  RiskAlert   RiskAlert? @relation(fields: [riskAlertId], references: [id])
 
   @@map("panicFunction")
 }
@@ -97,12 +90,11 @@ model RiskAlert {
 }
 
 model TwitterPost {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   riskAlertId String
   content     String
   date        DateTime
-
-  riskAlert RiskAlert @relation(fields: [riskAlertId], references: [id])
+  riskAlert   RiskAlert @relation(fields: [riskAlertId], references: [id])
 
   @@map("twitterPost")
 }

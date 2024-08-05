@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {SectionList, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export function Lista(){
   const [visibleSections, setVisibleSections] = useState<VisibleSections>({});
+  const [riskSituations, setRiskSituations] = useState([]);
+  const [resolutions, setResolutions] = useState<any>([]);
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -31,7 +34,7 @@ export function Lista(){
     },
   });
 
-  const resolutions = [
+  const resolutionsConst = [
     {
       title: 'Inundações',
       data: [
@@ -93,6 +96,20 @@ export function Lista(){
   type VisibleSections = {
     [key: string]: boolean;
   };
+
+  // const fetchRiskDetails = (id: any) => {
+  //   fetch(`http://localhost:3333/risks/${id}`)
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       const formattedData = formatResolutions(data);
+  //       setResolutions(formattedData);
+  //     })
+  //     .catch(error => {
+  //       console.error('Erro na requisição:', error);
+  //     });
+  // };
+  
+
   
 
   const toggleSection = (title: string) => {
@@ -102,11 +119,22 @@ export function Lista(){
     }));
   };
 
+  useEffect(() => {
+    fetch('http://192.168.15.9:3333/risks-situation')
+      .then(response => response.json())
+      .then(data => {
+        setRiskSituations(data.riskSituations);
+      })
+      .catch(error => {
+        console.error('Erro na requisição:', error);
+      });
+  }, []);
+
 
   return (
     <View style={styles.container}>
     <SectionList
-      sections={resolutions}
+      sections={resolutionsConst}
       renderItem={({ item, section }) =>
         visibleSections[section.title] ? (
           <Text style={styles.item}>
@@ -131,3 +159,4 @@ export function Lista(){
   </View>
   )
 }
+
