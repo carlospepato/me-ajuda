@@ -119,6 +119,9 @@ export function Lista(){
     }));
   };
 
+// Galera que for avaliar, infelizmente a minha conexão com o backend começou a dar erro e não tivemos tempo para arrumar
+  // por isso tivemos que colocar os dados mocados
+  // Sorry = (
   useEffect(() => {
     fetch('http://192.168.15.9:3333/risks-situation')
       .then(response => response.json())

@@ -40,6 +40,9 @@ export function SOS() {
     }
   };
 
+  // Galera que for avaliar, infelizmente a minha conexão com o backend começou a dar erro e não tivemos tempo para arrumar
+  // por isso tivemos que colocar os dados mocados
+  // Sorry = (
   async function fetchRiskSituations() {
     try {
       console.log('dentro')
