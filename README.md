@@ -21,8 +21,8 @@ Bem-vindo ao nosso projeto desenvolvido durante o hackathon da KipperDev! Nosso 
 - Objetivo: Fornecer informações rápidas e úteis para que os moradores saibam como agir em momentos de emergência.
 
 ##  Features
-  [] - Função para realizar Doação
-  [] - Lista de Doações
+  [ ] - Função para realizar Doação \
+  [ ] - Lista de Doações
 
 ## Participantes
 - @carlospepato (Backend)
