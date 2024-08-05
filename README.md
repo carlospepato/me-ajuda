@@ -28,6 +28,9 @@ Bem-vindo ao nosso projeto desenvolvido durante o hackathon da KipperDev! Nosso 
 - @carlospepato (Backend)
 - @davisouzamoya (App)
 - @GitHubdoGabriel (Figma)
+
+  ## Observações
+  Todar as validações foram realizar com o expo, utilizamod o Android para simular.
   
 ## Link do Figma
 Confira nosso design no Figma aqui. \
