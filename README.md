@@ -28,7 +28,8 @@ Bem-vindo ao nosso projeto desenvolvido durante o hackathon da KipperDev! Nosso 
 - @carlospepato (Backend)
 - @davisouzamoya (App)
 - @GitHubdoGabriel (Figma)
+  
 ## Link do Figma
-Confira nosso design no Figma aqui.
+Confira nosso design no Figma aqui. \
 [![Figma - Me Ajuda](https://img.shields.io/badge/Me_Ajuda-007BFF?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/design/yF2kPSpiUQ2h3X4XSLD9tq/Me-Ajuda?node-id=1-87&t=BQcf8BDgigOowml1-1)
 
